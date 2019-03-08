@@ -33,7 +33,7 @@ public class AnneeScolaireController {
 
     @GetMapping("/list-anne-scolaire")
     public ResponseEntity<List<AnneScolaire>> listeAnneeScolaire() {
-        List<AnneScolaire> anneScolaires = anneeScolaireRepository.findAll() != null ? anneeScolaireRepository.findAll() : new ArrayList<>();
+        List<AnneScolaire> anneScolaires = anneeScolaireRepository.all().orElse(new ArrayList<>()) ;
         return ResponseEntity.ok(anneScolaires);
     }
 }

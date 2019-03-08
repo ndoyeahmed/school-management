@@ -18,12 +18,30 @@ public class Niveau {
 	private long id;
 	
 	private String libelle;
+
+	private Boolean archiver;
 	
 	@OneToMany(mappedBy = "niveau")
 	private List<Classe> classes;
 	@ManyToOne
 	@JoinColumn(name = "cycle", referencedColumnName = "id")
 	private Cycle cycle;
+
+	public Boolean getArchiver() {
+		return archiver;
+	}
+
+	public void setArchiver(Boolean archiver) {
+		this.archiver = archiver;
+	}
+
+	public Cycle getCycle() {
+		return cycle;
+	}
+
+	public void setCycle(Cycle cycle) {
+		this.cycle = cycle;
+	}
 
 	public long getId() {
 		return id;

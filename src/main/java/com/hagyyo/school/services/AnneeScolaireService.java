@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,6 +25,8 @@ public class AnneeScolaireService {
                     anneeScolaireRepository.save(anneScolaire1);
                 });
             }
+        } else {
+            anneScolaire.setDateAjout(Timestamp.valueOf(LocalDateTime.now()));
         }
        anneeScolaireRepository.save(anneScolaire);
        return true;
