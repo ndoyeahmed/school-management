@@ -24,23 +24,23 @@ public class ConfigurationEcoleService {
     @Autowired private ClasseRepository classeRepository;
 
     public boolean addCycle(Cycle cycle) {
-        if (cycle != null) {
-            cycleRepository.save(cycle);
-        }
+        cycleRepository.save(cycle);
         return true;
     }
 
     public boolean addNiveau(Niveau niveau) {
-        if (niveau != null) {
-            niveauRepository.save(niveau);
-        }
+        niveauRepository.save(niveau);
         return true;
     }
 
     public boolean addClasse(Classe classe) {
-        if (classe != null) {
-            classeRepository.save(classe);
-        }
+        classeRepository.save(classe);
+        return true;
+    }
+
+    public boolean deleteCycle(Cycle cycle) {
+        cycle.setArchiver(true);
+        cycleRepository.save(cycle);
         return true;
     }
 

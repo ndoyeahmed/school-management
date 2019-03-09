@@ -27,6 +27,15 @@ public class ConfigurationEcoleController {
         }
     }
 
+    @PostMapping("/delete-cycle")
+    public ResponseEntity deleteCycle(@RequestBody Cycle cycle) {
+        try{
+            return new ResponseEntity<>(Collections.singletonMap("success", configurationEcoleService.deleteCycle(cycle)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/add-niveau")
     public ResponseEntity addNiveau(@RequestBody Niveau niveau) {
         try{
