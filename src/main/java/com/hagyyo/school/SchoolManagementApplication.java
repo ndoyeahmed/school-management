@@ -41,7 +41,7 @@ public class SchoolManagementApplication extends SpringBootServletInitializer {
                 Compte compte = new Compte();
                 compte.setId(1L);
                 compte.setEmail("billeteriegestion@gmail.com");
-                service.addUser(u, profil, compte,false);
+                service.addUser(u, profil, compte,false, null);
             } catch (Exception e) { e.printStackTrace(); }
         };
     }

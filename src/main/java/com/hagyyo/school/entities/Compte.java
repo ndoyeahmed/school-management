@@ -14,6 +14,7 @@ public class Compte implements Serializable {
     private String email;
     @JsonIgnore
     private String password;
+    private Boolean isPasswordSet;
     
     @OneToOne(cascade = CascadeType.ALL)
     //@PrimaryKeyJoinColumn
@@ -25,6 +26,14 @@ public class Compte implements Serializable {
 
     public Compte(String email) {
         this.email = email;
+    }
+
+    public Boolean getPasswordSet() {
+        return isPasswordSet;
+    }
+
+    public void setPasswordSet(Boolean passwordSet) {
+        isPasswordSet = passwordSet;
     }
 
     public Long getId() {

@@ -2,9 +2,12 @@ package com.hagyyo.school.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hagyyo.school.entities.Compte;
+import com.hagyyo.school.entities.Etablissement;
 import com.hagyyo.school.entities.Utilisateur;
+import com.hagyyo.school.repositories.EtablissementRepository;
 import com.hagyyo.school.security.TokenProvider;
 import com.hagyyo.school.services.CompteService;
+import com.hagyyo.school.services.EtablissementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,7 @@ public class CompteController {
     private CompteService compteService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired private EtablissementRepository etablissementRepository;
 
     //@Bean
     public TokenProvider tokenProvider() { return new TokenProvider(); }
@@ -77,6 +81,29 @@ public class CompteController {
         try {
             return new ResponseEntity<>(
                     Collections.singletonMap("success", compteService.updatePassword(body.get("email"), body.get("password"), body.get("newpassword"))), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/change-status-user")
+    @PreAuthorize("hasAnyAuthority('Super Administrateur', 'Administrateur')")
+    public ResponseEntity changeStatusUser(@RequestBody Map<String, String> body) {
+        try {
+            System.out.println(body.get("etat"));
+            return new ResponseEntity<>(
+                    Collections.singletonMap("success", compteService.changeStatusUser(body.get("email"), Boolean.valueOf(body.get("etat")))), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/archiver-user")
+    @PreAuthorize("hasAnyAuthority('Super Administrateur', 'Administrateur')")
+    public ResponseEntity archiverUser(@RequestBody Map<String, String> body) {
+        try {
+            return new ResponseEntity<>(
+                    Collections.singletonMap("success", compteService.archiverUser(body.get("email"))), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
@@ -137,19 +164,19 @@ public class CompteController {
     }
 
     @GetMapping("/liste-profils")
-    @PreAuthorize("hasAuthority('Administrateur')")
     public ResponseEntity profilList() {
         return ResponseEntity.ok(compteService.profilList());
     }
 
     @PostMapping("/ajouter-utilisateur")
-    @PreAuthorize("hasAuthority('Administrateur')")
+    @PreAuthorize("hasAnyAuthority('Super Administrateur','Administrateur')")
     public ResponseEntity createUser(@RequestBody Map<String, String> body) {
         try {
             Utilisateur utilisateur = new Utilisateur(body.get("nom"), body.get("prenom"), body.get("adresse"), body.get("telephone"));
             Compte compte = new Compte(body.get("email"));
+            Etablissement etablissement = etablissementRepository.findById(Long.valueOf(body.get("etablissement"))).orElse(null);
             return new ResponseEntity<>
-                    (Collections.singletonMap("success", compteService.addUser(utilisateur, body.get("profil"), compte, true))
+                    (Collections.singletonMap("success", compteService.addUser(utilisateur, body.get("profil"), compte, true, etablissement))
                     , HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
@@ -157,17 +184,9 @@ public class CompteController {
     }
 
     @GetMapping("/liste-utilisateurs")
-    @PreAuthorize("hasAuthority('Administrateur')")
-    public ResponseEntity<List<Utilisateur>> listFicheDistribution() {
+    @PreAuthorize("hasAnyAuthority('Super Administrateur','Administrateur')")
+    public ResponseEntity<List<Utilisateur>> listUser() {
         List<Utilisateur> utilisateurs = compteService.utilisateurList() != null ? compteService.utilisateurList() : new ArrayList<>();
         return ResponseEntity.ok(utilisateurs);
     }
-
-    @GetMapping("/liste-commercials")
-    @PreAuthorize("hasAnyAuthority('Administrateur', 'Mgr Commercial')")
-    public ResponseEntity<List<Utilisateur>> listCommercials() {
-        List<Utilisateur> commercials = compteService.listCommercials() != null ? compteService.listCommercials() : new ArrayList<>();
-        return ResponseEntity.ok(commercials);
-    }
-
 }
