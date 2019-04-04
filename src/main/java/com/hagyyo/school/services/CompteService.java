@@ -157,6 +157,23 @@ public class CompteService {
             return false;
     }
 
+    public Boolean changeUserProfil(String email, String profil) {
+        Utilisateur utilisateur = urepository.findByEmail(email).orElse(null);
+        if (utilisateur != null) {
+           ProfilUtilisateur profilUtilisateur = utilisateur.getProfilUtilisateurs().get(0);
+           Profil distinctByNom = prepository.getDistinctByNom(profil).orElse(null);
+           if (distinctByNom != null) {
+               profilUtilisateur.setProfil(distinctByNom);
+               p_urepository.save(profilUtilisateur);
+               return true;
+           } else {
+               return false;
+           }
+
+        } else
+            return false;
+    }
+
     public Boolean archiverUser(String email) {
         Utilisateur utilisateur = urepository.findByEmail(email).orElse(null);
         if (utilisateur != null) {

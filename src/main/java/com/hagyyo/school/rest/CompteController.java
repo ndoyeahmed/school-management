@@ -98,6 +98,17 @@ public class CompteController {
         }
     }
 
+    @PostMapping("/change-user-profile")
+    @PreAuthorize("hasAnyAuthority('Super Administrateur', 'Administrateur')")
+    public ResponseEntity changeUserProfil(@RequestBody Map<String, String> body) {
+        try {
+            return new ResponseEntity<>(
+                    Collections.singletonMap("success", compteService.changeUserProfil(body.get("email"), body.get("profil"))), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/archiver-user")
     @PreAuthorize("hasAnyAuthority('Super Administrateur', 'Administrateur')")
     public ResponseEntity archiverUser(@RequestBody Map<String, String> body) {

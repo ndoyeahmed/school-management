@@ -16,9 +16,11 @@ public class Parent extends Personne{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+	private String matricule;
 	@OneToMany(mappedBy = "parent")
 	private List<Eleve> eleves;
+	@OneToMany(mappedBy = "parent")
+	private List<Inscription> inscriptions;
 
 	public Parent() {}
 
@@ -33,5 +35,12 @@ public class Parent extends Personne{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
+	public String getMatricule() {
+		return matricule;
+	}
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
+	}
 }
