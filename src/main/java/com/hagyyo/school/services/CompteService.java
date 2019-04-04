@@ -54,7 +54,7 @@ public class CompteService {
                 .orElse(null);
     }
 
-    public boolean addUser(Utilisateur utilisateur, String profil, Compte compte, Boolean isAdd) throws Exception {
+    public boolean addUser(Utilisateur utilisateur, String profil, Compte compte, Boolean isAdd, Etablissement etablissement) throws Exception {
 
         if (isAdd || (!isAdd && urepository.findAll().size() == 0)) {
             Profil p = prepository.getDistinctByNom(profil).orElseThrow(() -> new Exception("Profil Inexistant"));
@@ -62,10 +62,13 @@ public class CompteService {
             // insertion de l'utilisateur
             utilisateur.setDate(Timestamp.valueOf(LocalDateTime.now()));
             utilisateur.setEtat(true);
+            utilisateur.setArchiver(false);
+            utilisateur.setEtablissement(etablissement);
             //urepository.save(utilisateur);
             utilisateur = urepository.save(utilisateur);
             // Creation du compte de l'utilisateur
             compte.setPassword(encoder.encode(password));
+            compte.setPasswordSet(false);
             compte.setUtilisateur(utilisateur);
             crepository.save(compte);
             // Ajout du profil
@@ -84,7 +87,7 @@ public class CompteService {
         try {
             String subject = "Confirmation de la creation du compte";
             String body = "Bonjour " + utilisateur.getPrenom() + " " + utilisateur.getNom() + ". Vous recevez ce mail  pour confirmer la creation de votre" +
-                    " compte sur la plateforme <a href='http://madjindo.com'>Madjindo</a>.<br/></br> Votre mot de passe est " + password;
+                    " compte sur la plateforme School-management.<br/></br> Votre mot de passe est " + password;
             mailService.send(compte.getEmail(), subject, body);
             // utilisateur.setEtat(true);
             //urepository.save(utilisateur);
@@ -111,6 +114,10 @@ public class CompteService {
     }*/
 
     public List<Profil> profilList() {
+        Utilisateur u = connectedUser();
+        if (u.getProfilUtilisateurs().get(0).getProfil().getNom().equals("Administrateur")) {
+            return prepository.allForAdministrateur().orElse(new ArrayList<>());
+        }
         return prepository.findAll() != null ? prepository.findAll() : new ArrayList<>();
     }
 
@@ -122,7 +129,14 @@ public class CompteService {
     }
 
     public List<Utilisateur> utilisateurList(){
-        return urepository.findAll();
+        Utilisateur utilisateur = connectedUser();
+
+        if (utilisateur.getProfilUtilisateurs().get(0).getProfil().getNom().equals("Super Administrateur"))
+            return urepository.all().orElse(new ArrayList<>());
+        else if (utilisateur.getProfilUtilisateurs().get(0).getProfil().getNom().equals("Administrateur"))
+            return urepository.getAllByEtablissement(utilisateur.getEtablissement().getId()).orElse(new ArrayList<>());
+        else
+            return new ArrayList<>();
     }
 
     public Boolean forgotPassword(String email, String password) throws Exception {
@@ -131,6 +145,43 @@ public class CompteService {
         compte.setPassword(encoder.encode(password));
         crepository.save(compte);
         return true;
+    }
+
+    public Boolean changeStatusUser(String email, Boolean etat) {
+        Utilisateur utilisateur = urepository.findByEmail(email).orElse(null);
+        if (utilisateur != null) {
+            utilisateur.setEtat(etat);
+            urepository.save(utilisateur);
+            return true;
+        } else
+            return false;
+    }
+
+    public Boolean changeUserProfil(String email, String profil) {
+        Utilisateur utilisateur = urepository.findByEmail(email).orElse(null);
+        if (utilisateur != null) {
+           ProfilUtilisateur profilUtilisateur = utilisateur.getProfilUtilisateurs().get(0);
+           Profil distinctByNom = prepository.getDistinctByNom(profil).orElse(null);
+           if (distinctByNom != null) {
+               profilUtilisateur.setProfil(distinctByNom);
+               p_urepository.save(profilUtilisateur);
+               return true;
+           } else {
+               return false;
+           }
+
+        } else
+            return false;
+    }
+
+    public Boolean archiverUser(String email) {
+        Utilisateur utilisateur = urepository.findByEmail(email).orElse(null);
+        if (utilisateur != null) {
+           utilisateur.setArchiver(true);
+            urepository.save(utilisateur);
+            return true;
+        } else
+            return false;
     }
 
     public Boolean updatePassword(String email, String password, String newpassword) throws Exception  {
@@ -143,10 +194,6 @@ public class CompteService {
             throw new Exception("Mot de passe Incorrect");
         }
         return true;
-    }
-
-    public List<Utilisateur> listCommercials() {
-        return urepository.commsercialList("Commercial").orElse(new ArrayList<>());
     }
 
     public Boolean hasProfile(String[] profils) {
