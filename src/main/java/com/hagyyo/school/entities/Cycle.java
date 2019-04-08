@@ -1,5 +1,7 @@
 package com.hagyyo.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ public class Cycle {
 	private Boolean archiver;
 	
 	@OneToMany(mappedBy = "cycle")
+	@JsonIgnore
 	private List<Niveau> niveaus;
 	
 	@ManyToOne
