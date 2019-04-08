@@ -1,5 +1,7 @@
 package com.hagyyo.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,9 +21,14 @@ public class Niveau {
 	
 	private String libelle;
 
+	private double montantInscription;
+
+	private double montantMensuel;
+
 	private Boolean archiver;
 	
 	@OneToMany(mappedBy = "niveau")
+	@JsonIgnore
 	private List<Classe> classes;
 	@ManyToOne
 	@JoinColumn(name = "cycle", referencedColumnName = "id")
@@ -57,5 +64,21 @@ public class Niveau {
 
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
+	}
+
+	public double getMontantInscription() {
+		return montantInscription;
+	}
+
+	public void setMontantInscription(double montantInscription) {
+		this.montantInscription = montantInscription;
+	}
+
+	public double getMontantMensuel() {
+		return montantMensuel;
+	}
+
+	public void setMontantMensuel(double montantMensuel) {
+		this.montantMensuel = montantMensuel;
 	}
 }

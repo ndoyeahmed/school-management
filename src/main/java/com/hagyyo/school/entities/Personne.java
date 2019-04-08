@@ -1,17 +1,9 @@
 package com.hagyyo.school.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public class Personne {
-	
-	
-	protected long id;
 
 	protected String nom;
 
@@ -37,14 +29,6 @@ public class Personne {
 		this.adresse = adresse;
 		this.genre = genre;
 		this.nationalite = nationalite;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getNom() {

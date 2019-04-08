@@ -17,6 +17,7 @@ public class Parent extends Personne{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String matricule;
+	private String jeSuis;
 	@OneToMany(mappedBy = "parent")
 	private List<Eleve> eleves;
 	@OneToMany(mappedBy = "parent")
@@ -26,6 +27,14 @@ public class Parent extends Personne{
 
 	public Parent(String nom, String prenom, String telephone, String email, String adresse, String genre, String nationalite) {
 		super(nom, prenom, telephone, email, adresse, genre, nationalite);
+	}
+
+	public String getJeSuis() {
+		return jeSuis;
+	}
+
+	public void setJeSuis(String jeSuis) {
+		this.jeSuis = jeSuis;
 	}
 
 	public long getId() {
