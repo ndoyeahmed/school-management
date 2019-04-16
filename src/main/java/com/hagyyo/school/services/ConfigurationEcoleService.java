@@ -27,12 +27,24 @@ public class ConfigurationEcoleService {
         cycleRepository.save(cycle);
         return true;
     }
-
+//.......gestion des niveaux....
     public boolean addNiveau(Niveau niveau) {
         niveauRepository.save(niveau);
         return true;
     }
 
+    public boolean updateNiveau(Niveau niveau) {
+        niveauRepository.save(niveau);
+
+        return true;
+    }
+
+    public boolean deleteNiveau(Niveau niveau){
+        niveau.setArchiver(true);
+        niveauRepository.save(niveau);
+        return true;
+    }
+//....fin gestion Niveaux........
     public boolean addClasse(Classe classe) {
         classeRepository.save(classe);
         return true;
@@ -43,6 +55,7 @@ public class ConfigurationEcoleService {
         cycleRepository.save(cycle);
         return true;
     }
+
 
     public List<Classe> allClasse() {
         return classeRepository.all().orElse(new ArrayList<>());

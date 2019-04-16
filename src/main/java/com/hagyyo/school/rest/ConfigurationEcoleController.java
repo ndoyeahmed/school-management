@@ -35,7 +35,7 @@ public class ConfigurationEcoleController {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
-
+//........Niveaux Controller...
     @PostMapping("/add-niveau")
     public ResponseEntity addNiveau(@RequestBody Niveau niveau) {
         try{
@@ -44,6 +44,31 @@ public class ConfigurationEcoleController {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/update-niveau")
+    public ResponseEntity updateNiveau(@RequestBody Niveau niveau) {
+        try{
+            return new ResponseEntity<>(Collections.singletonMap("success", configurationEcoleService.updateNiveau(niveau)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/delete-niveau")
+    public ResponseEntity deleteNiveau(@RequestBody Niveau niveau) {
+        try{
+            return new ResponseEntity<>(Collections.singletonMap("success", configurationEcoleService.deleteNiveau(niveau)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/list-niveau")
+    public ResponseEntity<List<Niveau>> listeNiveau() {
+        List<Niveau> niveau = configurationEcoleService.allNiveau();
+        return ResponseEntity.ok(niveau);
+    }
+//.......Fin Niveaux Controller......
 
     @PostMapping("/add-classe")
     public ResponseEntity addClasse(@RequestBody Classe classe) {
@@ -60,11 +85,6 @@ public class ConfigurationEcoleController {
         return ResponseEntity.ok(cycles);
     }
 
-    @GetMapping("/list-niveau")
-    public ResponseEntity<List<Niveau>> listeNiveau() {
-        List<Niveau> niveaus = configurationEcoleService.allNiveau();
-        return ResponseEntity.ok(niveaus);
-    }
 
     @GetMapping("/list-classe")
     public ResponseEntity<List<Classe>> listeClasse() {
