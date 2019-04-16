@@ -18,6 +18,8 @@ public class Cycle {
 	private long id;
 	
 	private String libelle;
+
+	private Boolean archiver;
 	
 	@OneToMany(mappedBy = "cycle")
 	private List<Niveau> niveaus;
@@ -40,6 +42,14 @@ public class Cycle {
 
 	public void setEtablissement(Etablissement etablissement) {
 		this.etablissement = etablissement;
+	}
+
+	public Boolean getArchiver() {
+		return archiver;
+	}
+
+	public void setArchiver(Boolean archiver) {
+		this.archiver = archiver;
 	}
 
 	public long getId() {

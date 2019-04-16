@@ -1,5 +1,6 @@
 package com.hagyyo.school.entities;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,9 +19,27 @@ public class AnneScolaire {
 	private String annee;
 	
 	private boolean encours;
-	
+	private boolean archiver;
+	private Timestamp dateAjout;
+
 	@OneToMany(mappedBy = "anneScolaire")
 	private List<Inscription> inscriptions;
+
+	public Timestamp getDateAjout() {
+		return dateAjout;
+	}
+
+	public void setDateAjout(Timestamp dateAjout) {
+		this.dateAjout = dateAjout;
+	}
+
+	public boolean isArchiver() {
+		return archiver;
+	}
+
+	public void setArchiver(boolean archiver) {
+		this.archiver = archiver;
+	}
 
 	public long getId() {
 		return id;

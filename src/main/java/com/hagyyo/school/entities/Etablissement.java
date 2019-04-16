@@ -1,12 +1,10 @@
 package com.hagyyo.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Etablissement {
@@ -18,15 +16,32 @@ public class Etablissement {
 	private String libelle;
 	
 	private Boolean etat;
+
+	private Boolean isArchiver;
 	
 	@OneToMany(mappedBy = "etablissement")
+	@JsonIgnore
 	private List<Cycle> cycles;
 	
 	@OneToMany(mappedBy = "etablissement")
+	@JsonIgnore
 	private List<Utilisateur> utilisateurs;
 	
 	@OneToMany(mappedBy = "etablissement")
+	@JsonIgnore
 	private List<FonctionnaliteEtablissement> fonctionnaliteEtablissements;
+
+	@ManyToOne
+	@JoinColumn(name = "ville", referencedColumnName = "id")
+	private Ville ville;
+
+	public Boolean getArchiver() {
+		return isArchiver;
+	}
+
+	public void setArchiver(Boolean archiver) {
+		isArchiver = archiver;
+	}
 
 	public Boolean getEtat() {
 		return etat;
@@ -67,5 +82,12 @@ public class Etablissement {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	
+
+	public Ville getVille() {
+		return ville;
+	}
+
+	public void setVille(Ville ville) {
+		this.ville = ville;
+	}
 }

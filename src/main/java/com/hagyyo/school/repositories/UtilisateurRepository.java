@@ -14,6 +14,12 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     @Query("SELECT u FROM Utilisateur u WHERE u.compte.email=:login and u.etat=:etat")
     public Optional<Utilisateur> connexion(@Param("login") String login, @Param("etat") Boolean etat);
 
-    @Query("SELECT u FROM Utilisateur u WHERE u.id IN (SELECT pu FROM ProfilUtilisateur pu WHERE pu.profil.id=(SELECT p FROM Profil p WHERE p.nom=:profil))")
-    public Optional<List<Utilisateur>> commsercialList(@Param("profil") String profil);
+    @Query("select u from Utilisateur u where u.etablissement IS not null and u.etablissement.id=:id and u.isArchiver=false order by u.etat desc , u.date desc")
+    public Optional<List<Utilisateur>> getAllByEtablissement(@Param("id") Long id);
+
+    @Query("select u from Utilisateur u where u.isArchiver=false order by u.etat desc , u.date desc")
+    public Optional<List<Utilisateur>> all();
+
+    @Query("select u from Utilisateur u where u.compte.email=:email")
+    public Optional<Utilisateur> findByEmail(@Param("email") String email);
 }

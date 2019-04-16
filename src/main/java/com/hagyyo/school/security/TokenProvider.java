@@ -29,7 +29,7 @@ public class TokenProvider {
     public String createForgotToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
-                .setExpiration(Date.from(LocalDate.now().plusDays(2).atStartOfDay().toInstant(ZoneOffset.MAX)))
+                .setExpiration(Date.from(LocalDate.now().plusDays(1).atStartOfDay().toInstant(ZoneOffset.MAX)))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
     }

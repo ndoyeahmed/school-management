@@ -21,8 +21,7 @@ public class Eleve extends Personne{
 	private long id;
 	
 	private String matricule;
-	
-	@Temporal(TemporalType.TIMESTAMP)
+
 	private Date datenaissance;
 	
 	private String lieunaissance;
