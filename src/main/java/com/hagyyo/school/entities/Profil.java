@@ -14,12 +14,38 @@ public class Profil implements Serializable{
 	private long id;
 	private String nom;
 	private String description;
+	private Boolean etat;
+	private Boolean isArchiver;
 	
 	@OneToMany(mappedBy = "profil")
 	// @JsonBackReference
 	@JsonIgnore
     private List<ProfilUtilisateur> profilUtilisateurs;
-	
+
+	public Boolean getEtat() {
+		return etat;
+	}
+
+	public void setEtat(Boolean etat) {
+		this.etat = etat;
+	}
+
+	public Boolean getArchiver() {
+		return isArchiver;
+	}
+
+	public void setArchiver(Boolean archiver) {
+		isArchiver = archiver;
+	}
+
+	public List<ProfilUtilisateur> getProfilUtilisateurs() {
+		return profilUtilisateurs;
+	}
+
+	public void setProfilUtilisateurs(List<ProfilUtilisateur> profilUtilisateurs) {
+		this.profilUtilisateurs = profilUtilisateurs;
+	}
+
 	public long getId() {
 		return id;
 	}

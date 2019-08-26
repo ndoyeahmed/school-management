@@ -3,15 +3,7 @@ package com.hagyyo.school.entities;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 public class Eleve extends Personne{
@@ -21,8 +13,10 @@ public class Eleve extends Personne{
 	private long id;
 	
 	private String matricule;
-	
-	@Temporal(TemporalType.TIMESTAMP)
+
+	@Lob
+	private byte[] photo;
+
 	private Date datenaissance;
 	
 	private String lieunaissance;
@@ -40,6 +34,22 @@ public class Eleve extends Personne{
 		this.matricule = matricule;
 		this.datenaissance = datenaissance;
 		this.lieunaissance = lieunaissance;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	public Parent getParent() {
+		return parent;
+	}
+
+	public void setParent(Parent parent) {
+		this.parent = parent;
 	}
 
 	public long getId() {

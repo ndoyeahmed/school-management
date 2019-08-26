@@ -1,5 +1,7 @@
 package com.hagyyo.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,8 +20,11 @@ public class Cycle {
 	private long id;
 	
 	private String libelle;
+
+	private Boolean archiver;
 	
 	@OneToMany(mappedBy = "cycle")
+	@JsonIgnore
 	private List<Niveau> niveaus;
 	
 	@ManyToOne
@@ -40,6 +45,14 @@ public class Cycle {
 
 	public void setEtablissement(Etablissement etablissement) {
 		this.etablissement = etablissement;
+	}
+
+	public Boolean getArchiver() {
+		return archiver;
+	}
+
+	public void setArchiver(Boolean archiver) {
+		this.archiver = archiver;
 	}
 
 	public long getId() {

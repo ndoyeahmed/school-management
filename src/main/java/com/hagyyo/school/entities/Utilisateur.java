@@ -1,5 +1,7 @@
 package com.hagyyo.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Utilisateur {
     private String telephone;
     private Timestamp date;
     private Boolean etat;
-
+    private Boolean isArchiver;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<ProfilUtilisateur> profilUtilisateurs;
@@ -26,20 +28,31 @@ public class Utilisateur {
     private Compte compte;
 
     @OneToMany(mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Paiement> paiements;
     @OneToMany(mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Classe> classes;
     @ManyToOne
     @JoinColumn(name = "etablissement", referencedColumnName = "id")
     private Etablissement etablissement;
 
-    public Utilisateur() {}
+    public Utilisateur() {
+    }
 
     public Utilisateur(String nom, String prenom, String adresse, String telephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.telephone = telephone;
+    }
+
+    public Boolean getArchiver() {
+        return isArchiver;
+    }
+
+    public void setArchiver(Boolean archiver) {
+        isArchiver = archiver;
     }
 
     public Long getId() {

@@ -19,6 +19,8 @@ public class Classe {
 	private long id;
 	
 	private String libelle;
+
+	private Boolean archiver;
 	
 	@OneToMany(mappedBy = "classe")
 	private List<Inscription> inscriptions;
@@ -35,6 +37,46 @@ public class Classe {
 	@ManyToOne
 	@JoinColumn(name = "utilisateur", referencedColumnName = "id")
 	private Utilisateur utilisateur;
+
+	public Boolean getArchiver() {
+		return archiver;
+	}
+
+	public void setArchiver(Boolean archiver) {
+		this.archiver = archiver;
+	}
+
+	public Cours getCours() {
+		return cours;
+	}
+
+	public void setCours(Cours cours) {
+		this.cours = cours;
+	}
+
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
+	}
+
+	public Niveau getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 
 	public long getId() {
 		return id;
