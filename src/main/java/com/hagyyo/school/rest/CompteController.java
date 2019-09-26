@@ -7,9 +7,7 @@ import com.hagyyo.school.entities.Utilisateur;
 import com.hagyyo.school.repositories.EtablissementRepository;
 import com.hagyyo.school.security.TokenProvider;
 import com.hagyyo.school.services.CompteService;
-import com.hagyyo.school.services.EtablissementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

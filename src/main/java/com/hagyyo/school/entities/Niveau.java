@@ -26,7 +26,7 @@ public class Niveau {
 	private double montantMensuel;
 
 	private Boolean archiver;
-	
+//	@JsonIgnore
 	@OneToMany(mappedBy = "niveau")
 	@JsonIgnore
 	private List<Classe> classes;

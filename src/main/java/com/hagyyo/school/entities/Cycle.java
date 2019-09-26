@@ -22,11 +22,10 @@ public class Cycle {
 	private String libelle;
 
 	private Boolean archiver;
-	
+//	@JsonIgnore
 	@OneToMany(mappedBy = "cycle")
 	@JsonIgnore
 	private List<Niveau> niveaus;
-	
 	@ManyToOne
 	@JoinColumn(name = "etablissement", referencedColumnName = "id")
 	private Etablissement etablissement;

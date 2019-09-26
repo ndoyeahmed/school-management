@@ -19,6 +19,7 @@ public class Utilisateur {
     private Timestamp date;
     private Boolean etat;
     private Boolean isArchiver;
+    private boolean enabled;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<ProfilUtilisateur> profilUtilisateurs;
@@ -38,6 +39,8 @@ public class Utilisateur {
     private Etablissement etablissement;
 
     public Utilisateur() {
+        super();
+        this.enabled = false;
     }
 
     public Utilisateur(String nom, String prenom, String adresse, String telephone) {
@@ -45,6 +48,14 @@ public class Utilisateur {
         this.prenom = prenom;
         this.adresse = adresse;
         this.telephone = telephone;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Boolean getArchiver() {

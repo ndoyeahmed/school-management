@@ -37,7 +37,7 @@ public class Paiement {
 	@ManyToOne
 	@JoinColumn(name = "utilisateur", referencedColumnName = "id")
 	private Utilisateur utilisateur;
-	@OneToMany(mappedBy = "")
+	@OneToMany(mappedBy = "paiement")
 	private List<Inscription> inscriptions;
 
 	public long getId() {

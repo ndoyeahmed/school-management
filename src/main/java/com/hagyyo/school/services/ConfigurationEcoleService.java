@@ -1,5 +1,6 @@
 package com.hagyyo.school.services;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hagyyo.school.entities.Classe;
 import com.hagyyo.school.entities.Cycle;
 import com.hagyyo.school.entities.Niveau;
@@ -60,7 +61,7 @@ public class ConfigurationEcoleService {
     public List<Classe> allClasse() {
         return classeRepository.all().orElse(new ArrayList<>());
     }
-
+    @JsonIgnore
     public List<Niveau> allNiveau() {
         return niveauRepository.all().orElse(new ArrayList<>());
     }

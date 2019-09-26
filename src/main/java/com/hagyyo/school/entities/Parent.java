@@ -1,7 +1,5 @@
 package com.hagyyo.school.entities;
 
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 
 import javax.persistence.Entity;
